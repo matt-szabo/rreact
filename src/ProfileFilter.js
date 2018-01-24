@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './ProfileFilter.css';
 
 
 class ProfileFilter extends Component {
@@ -20,7 +19,6 @@ class ProfileFilter extends Component {
 
 
   handleSubmit(event) {
-    alert("Let's filter for " + this.state.fill);
     this.props.onFilter(this.state.fill);
 
     event.preventDefault();
@@ -28,13 +26,17 @@ class ProfileFilter extends Component {
 
   render() {
     return (
+        <div>
       <form onSubmit={this.handleSubmit}>
-        <label>
+        <p>
           Filter with this text:
+        </p>
           <input type="text" value={this.state.fill} onChange={this.handleChangeFill} />
-        </label>
+      <p>
         <input type="submit" value="Filter" />
+      </p>
       </form>
+        </div>
     );
   }
 }
