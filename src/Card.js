@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import './Card.css';
+
 
 
 class Card extends Component{
@@ -19,9 +21,11 @@ handleChange(e) {
 
   render() {
     return (
-    	<div>
-	    	<button onClick={this.handleChange}>Delete Me</button>
-	    	<div>{this.props.children}</div>
+    	<div className="card">
+	    	<div className="c1">{this.props.children}</div>
+        <div className="b1">
+        <button onClick={this.handleChange}>Delete Me</button>
+        </div>
     	</div>
     )
   }

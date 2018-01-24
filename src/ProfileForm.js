@@ -3,30 +3,46 @@ import React, { Component } from 'react';
 class ProfileForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {id: '', name: '', desc : ''};
+    this.state = {firstName: '', lastName: '', address : '', prov: '', postalCode: ''};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleChange2 = this.handleChange2.bind(this);
     this.handleChange3 = this.handleChange3.bind(this);
+    this.handleChange4 = this.handleChange4.bind(this);
+    this.handleChange5 = this.handleChange5.bind(this);
+    this.handleChangeID = this.handleChangeID.bind(this);
+
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
+  handleChangeID(event) {
     this.setState({id: event.target.value});
   }
 
+  handleChange(event) {
+    this.setState({firstName: event.target.value});
+  }
+
    handleChange2(event) {
-    this.setState({name: event.target.value});
+    this.setState({lastName: event.target.value});
   }
 
    handleChange3(event) {
-    this.setState({desc: event.target.value});
+    this.setState({address: event.target.value});
+  }
+
+  handleChange4(event) {
+    this.setState({prov: event.target.value});
+  }
+
+  handleChange5(event) {
+    this.setState({postalCode: event.target.value});
   }
 
   handleSubmit(event) {
-    alert('An entry was submitted: ' + this.state.name);
-      this.props.onSubmit(this.state.id,this.state.name,this.state.desc);
+    alert(this.state.firstName + '\'s address was submitted.');
+      this.props.onSubmit(this.state.firstName,this.state.lastName,this.state.address,this.state.prov,this.state.postalCode);
 
     event.preventDefault();
   }
@@ -35,18 +51,28 @@ class ProfileForm extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
-          id:
-          <input type="text" value={this.state.id} onChange={this.handleChange} />
+          First Name:
+          <input type="text" value={this.state.firstName} onChange={this.handleChange} />
           </label>
           <label>
-          Name:
-          <input type="text" value={this.state.name} onChange={this.handleChange2} />
+          Last Name:
+          <input type="text" value={this.state.lastName} onChange={this.handleChange2} />
           </label>
           <label>
-          desc:
-          <input type="text" value={this.state.desc} onChange={this.handleChange3} />
+          Address:
+          <input type="text" value={this.state.address} onChange={this.handleChange3} />
           </label>
-
+        <label>
+          Province:
+          <input type="text" value={this.state.prov} onChange={this.handleChange4} />
+        </label>
+        <label>
+          Postal Code:
+          <input type="text" value={this.state.postalCode} onChange={this.handleChange5} />
+        </label>
+        <label>
+          <input type="hidden" value={Math.floor((Math.random() * 100000) + 1)} onChange={this.handleChangeID} />
+        </label>
         <input type="submit" value="Submit" />
       </form>
     );

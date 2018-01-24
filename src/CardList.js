@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import ProfileImage from "./ProfileImage";
 import Card from "./Card";
 import CheckBox from "./CheckBox";
 import ProfileForm from "./ProfileForm";
-
+import ProfileFilter from "./ProfileFilter";
 
 
 class CardList extends Component {
@@ -14,32 +13,56 @@ class CardList extends Component {
       profiles: [
         {
           id: 1,
-          name: "Jane React",
-          description: "Coolest person alive",
+          firstName: "Jack1",
+          lastName: "Smith",
+          address: "5587 Notre-Dame",
+          prov: "QC",
+          postalCode: "H4R 3G3",
           checked:false
         },
         {
           id: 2,
-          name: "Matt Smith",
-          description: "2nd Coolest person alive",
+          firstName: "Jack2",
+          lastName: "Smith",
+          address: "5587 Notre-Dame",
+          prov: "QC",
+          postalCode: "H4R 3G3",
           checked:false
         },
         {
           id: 3,
-          name: "Joe Blo",
-          description: "3rd Coolest person alive",
+          firstName: "Jack3",
+          lastName: "Smith",
+          address: "5587 Notre-Dame",
+          prov: "QC",
+          postalCode: "H4R 3G3",
           checked:false
         },
         {
           id: 4,
-          name: "Lee Johnson",
-          description: "4th Coolest person alive",
+          firstName: "Jack4",
+          lastName: "Smith",
+          address: "5587 Notre-Dame",
+          prov: "QC",
+          postalCode: "H4R 3G3",
           checked:false
         },
         {
           id: 5,
-          name: "Bello Barnes",
-          description: "5th Coolest person alive",
+          firstName: "Jack5",
+          lastName: "Smith",
+          address: "5587 Notre-Dame",
+          prov: "QC",
+          postalCode: "H4R 3G3",
+          checked:false
+        },
+        {
+          id: 6,
+          firstName: "Jack6",
+          lastName: "Smith",
+          address: "5587 Notre-Dame",
+          prov: "QC",
+          postalCode: "H4R 3G3",
           checked:false
         }
       ]
@@ -49,8 +72,23 @@ class CardList extends Component {
     this.toggleCheckbox = this.toggleCheckbox.bind(this);
     this.removeChecked = this.removeChecked.bind(this);
     this.writer = this.writer.bind(this);
+    this.filter = this.filter.bind(this);
 
 
+
+
+  }
+
+  filter(idi) {
+
+    //profiles = this.state.profiles.filter(function (person) { return person.includes(idi); });
+
+    this.setState({
+      profiles : this.state.profiles.filter(function(person) {
+        return person.firstName.includes(idi);
+      })
+
+    })
 
   }
 
@@ -58,6 +96,7 @@ class CardList extends Component {
     this.setState({
       profiles: this.state.profiles.filter(function(person) {
         return person.id !== idi;
+
       })
     });
   }
@@ -67,7 +106,7 @@ class CardList extends Component {
     console.log("woof");
     let p = this.state.profiles;
 
-     console.log("the toggle " + p);
+    console.log("the toggle " + p);
 
 
     p[id].checked = !p[id].checked
@@ -85,25 +124,25 @@ class CardList extends Component {
 
   }
 
-  writer(a,b,c){
+  writer(a,b,c,d,e,f){
 
 
-          console.log("woof");
+    console.log("woof");
 
-          console.log("a " + a + " ", "b " + b + " ", "c " + c);
-
-
-          let obj = { id: a, name: b, description: c, checked:false}
+    console.log("a " + a + " ", "b " + b + " ", "c " + c);
 
 
-        this.setState({ 
+    let obj = { firstName: a, lastName: b, address: c, prov: d, postalCode: e, id : f, checked:false}
 
-        profiles: this.state.profiles.concat(obj)
 
-        });
+    this.setState({
 
-        console.log(this.state.profiles);
-              console.log("woof2");
+      profiles: this.state.profiles.concat(obj)
+
+    });
+
+    console.log(this.state.profiles);
+    console.log("woof2");
 
   }
 
@@ -112,31 +151,52 @@ class CardList extends Component {
   render() {
     return (
       <div>
-      <ProfileForm onSubmit={this.writer}/>
-        <ul>
-          {this.state.profiles.map((profile,i) => {
-            return (
-              <li key={i}>
-                <ProfileImage />
-                <CheckBox key={profile.id} index={i} onSelect={this.toggleCheckbox} />
-                <Card num={profile.id} onClick={this.removeItem} >
-                  <h1>{profile.name}</h1>
-                  <p>This item is at index position {i}</p>
-                  <p>{profile.description}</p>
+        <ProfileFilter onFilter={this.filter}/>
+        <ProfileForm onSubmit={this.writer}/>
+
+        return (
+
+        <div>
+          <table>
+
+            <tbody>
+            <tr>
+              <th colSpan="2" className="large">First Name</th>
+              <th colSpan="1" className="minview">Last Name</th>
+              <th>Address</th>
+              <th>Province</th>
+              <th>Postal Code</th>
+
+            </tr>
+
+
+            <Card num={profile.id} onClick={this.removeItem} >
+
+              {this.state.profiles.map((profile,i) => (
+                <tr key={i}>
+                  <td className="col1">{profile.firstName}</td>
+                  <td className="col">{profile.lastName}</td>
+                  <td className="col">{profile.address}</td>
+                  <td className="col">{profile.prov}</td>
+                  <td className="col">{profile.postalCode}</td>
+                  <td className="col"><CheckBox key={profile.id} index={i} onSelect={this.toggleCheckbox} /></td>
+
+                </tr>
+              ))}
                 </Card>
-              </li>
-            );
-          })}
-        </ul>
 
-        <p> We've got {this.state.profiles.length} people in this list.</p>
 
-        <button onClick={this.removeChecked}>Remove Checked Items</button>
+                </tbody>
+                </table>
 
-      </div>
-    );
 
-  }
-}
 
-export default CardList;
+            <p> We've got {this.state.profiles.length} people in this list.</p>
+
+            <button onClick={this.removeChecked}>Remove Checked Items</button>
+        </div>;
+        )
+        }
+        }
+
+        export default CardList;

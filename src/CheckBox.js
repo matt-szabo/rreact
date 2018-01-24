@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './CheckBox.css';
 
 
 class CheckBox extends Component{
@@ -18,7 +19,7 @@ this.handleSelect = this.handleSelect.bind(this);
 
   render() {
     return (
-    	<div>
+    	<div className="chk">
     		<input type="checkbox" onChange={this.handleSelect}/>
     	</div>
     )
